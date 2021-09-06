@@ -13,16 +13,23 @@ public class SimpleArrayList<T> implements List<T> {
         this.container = (T[]) new Object[capacity];
     }
 
+    private void addArray(T t) {
+        for (int index = 0; index < container.length; index++) {
+            if (container[index] == null) {
+                container[index] = t;
+                modCount++;
+                break;
+            }
+        }
+    }
+
     @Override
     public void add(T t) {
         if (size() < container.length) {
-            for (int index = 0; index < container.length; index++) {
-                if (container[index] == null) {
-                    container[index] = t;
-                    modCount++;
-                    break;
-                }
-            }
+             addArray(t);
+        } else if (size() >= container.length) {
+            container = Arrays.copyOf(container, container.length * 2);
+            addArray(t);
         }
     }
 
