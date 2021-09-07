@@ -1,6 +1,7 @@
 package ru.job4j.list;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ public class SimpleArrayList<T> implements List<T> {
     private T[] container;
     private int size;
     private int modCount;
+    private int point = 0;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -17,6 +19,7 @@ public class SimpleArrayList<T> implements List<T> {
         for (int index = 0; index < container.length; index++) {
             if (container[index] == null) {
                 container[index] = t;
+                size++;
                 modCount++;
                 break;
             }
@@ -50,7 +53,8 @@ public class SimpleArrayList<T> implements List<T> {
             rsl = container[index];
             System.arraycopy(container, index + 1, container, index, size() - index - 1);
             container[size() - 1] = null;
-            modCount--;
+            size--;
+            modCount++;
         }
         return rsl;
     }
@@ -62,29 +66,26 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-//        size = 0;
-//        for (int index = 0; index <= container.length; index++) {
-//            if (container[index] == null) {
-//                break;
-//            }
-//            size++;
-//        }
-//        return size;
-        return modCount;
+        return size;
     }
 
     @Override
     public Iterator<T> iterator() {
+        int expectedModCount = modCount;
         return new Iterator<T>() {
 
             @Override
             public boolean hasNext() {
-                return false;
+                return point < container.length;
+
             }
 
             @Override
             public T next() {
-                 return null;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return container[point++];
             }
 
         };
