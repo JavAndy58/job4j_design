@@ -12,7 +12,11 @@ public class SimpleArrayList<T> implements List<T> {
         this.container = (T[]) new Object[capacity];
     }
 
-    private void addArray(T t) {
+    @Override
+    public void add(T t) {
+        if (size() >= container.length) {
+            container = Arrays.copyOf(container, container.length * 2);
+        }
         for (int index = 0; index < container.length; index++) {
             if (container[index] == null) {
                 container[index] = t;
@@ -24,41 +28,29 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     @Override
-    public void add(T t) {
-        if (size() < container.length) {
-             addArray(t);
-        } else if (size() >= container.length) {
-            container = Arrays.copyOf(container, container.length * 2);
-            addArray(t);
-        }
-    }
-
-    @Override
     public T set(int index, T newValue) {
         T rsl = null;
-        if (Objects.checkIndex(index, container.length - 1) >= 0) {
-            rsl = container[index];
-            container[index] = newValue;
-        }
+        int indexTemp = Objects.checkIndex(index, size);
+        rsl = container[indexTemp];
+        container[indexTemp] = newValue;
         return rsl;
     }
 
     @Override
     public T remove(int index) {
         T rsl = null;
-        if (Objects.checkIndex(index, container.length - 1) >= 0) {
-            rsl = container[index];
-            System.arraycopy(container, index + 1, container, index, size() - index - 1);
-            container[size() - 1] = null;
-            size--;
-            modCount++;
-        }
+        int indexTemp = Objects.checkIndex(index, size);
+        rsl = container[indexTemp];
+        System.arraycopy(container, indexTemp + 1, container, indexTemp, size() - indexTemp - 1);
+        container[size() - 1] = null;
+        size--;
+        modCount++;
         return rsl;
     }
 
     @Override
     public T get(int index) {
-        return container[Objects.checkIndex(index, container.length - 1)];
+        return container[Objects.checkIndex(index, size)];
     }
 
     @Override
@@ -73,24 +65,22 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
-                return point < container.length && modCount > 0;
-
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return point < size;
             }
 
             @Override
             public T next() {
-
-                if (size() <= 0) {
-                    throw new NoSuchElementException();
-                }
-
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
+                if (size() <= 0) {
+                    throw new NoSuchElementException();
+                }
                 return container[point++];
             }
-
         };
     }
-
 }
