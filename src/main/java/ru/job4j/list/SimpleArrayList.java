@@ -1,9 +1,6 @@
 package ru.job4j.list;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
     private T[] container;
@@ -76,12 +73,17 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
-                return point < container.length;
+                return point < container.length && modCount > 0;
 
             }
 
             @Override
             public T next() {
+
+                if (size() <= 0) {
+                    throw new NoSuchElementException();
+                }
+
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
