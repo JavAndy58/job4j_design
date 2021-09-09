@@ -1,4 +1,4 @@
-package ru.job4j.list;
+package ru.job4j.collection.list;
 
 import java.util.*;
 
@@ -17,14 +17,8 @@ public class SimpleArrayList<T> implements List<T> {
         if (size() >= container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
-        for (int index = 0; index < container.length; index++) {
-            if (container[index] == null) {
-                container[index] = t;
-                size++;
-                modCount++;
-                break;
-            }
-        }
+        container[size++] = t;
+        modCount++;
     }
 
     @Override
@@ -73,12 +67,10 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public T next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-                if (size() <= 0) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+
                 return container[point++];
             }
         };

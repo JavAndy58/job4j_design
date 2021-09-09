@@ -1,8 +1,9 @@
-package ru.job4j.list;
+package ru.job4j.collection.list;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -123,4 +124,5 @@ public class SimpleArrayListTest {
         list.add(0);
         iterator.next();
     }
+
 }
