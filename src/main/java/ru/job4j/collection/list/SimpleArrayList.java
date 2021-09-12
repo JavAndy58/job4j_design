@@ -23,18 +23,18 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public T set(int index, T newValue) {
         T rsl = null;
-        int indexTemp = Objects.checkIndex(index, size);
-        rsl = container[indexTemp];
-        container[indexTemp] = newValue;
+        Objects.checkIndex(index, size);
+        rsl = container[index];
+        container[index] = newValue;
         return rsl;
     }
 
     @Override
     public T remove(int index) {
         T rsl = null;
-        int indexTemp = Objects.checkIndex(index, size);
-        rsl = container[indexTemp];
-        System.arraycopy(container, indexTemp + 1, container, indexTemp, size() - indexTemp - 1);
+        Objects.checkIndex(index, size);
+        rsl = container[index];
+        System.arraycopy(container, index + 1, container, index, size() - index - 1);
         container[size() - 1] = null;
         size--;
         modCount++;
@@ -43,7 +43,8 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     @Override
@@ -54,7 +55,7 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            int expectedModCount = modCount;
+            final int expectedModCount = modCount;
             int point = 0;
 
             @Override
