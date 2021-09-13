@@ -13,7 +13,7 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
 
     public SimpleLinkedList() {
         fstNode = new Node<>(null, null, lstNode);
-        lstNode = new Node<>(null,fstNode, null);
+        lstNode = new Node<>(null, fstNode, null);
     }
 
     @Override
@@ -28,8 +28,8 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
 
     @Override
     public E get(int index) {
-        Node<E> rsl = null;
-        for(int i = 0; i < size; i++) {
+        Node<E> rsl = fstNode;
+        for(int i = 1; i < index; i++) {
             rsl = fstNode.getNextElement();
         }
 
