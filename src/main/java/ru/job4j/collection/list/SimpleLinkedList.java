@@ -13,8 +13,8 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
     private int modCount;
 
     public SimpleLinkedList() {
-        fstNode = new Node<>(null, null, lstNode);
         lstNode = new Node<>(null, fstNode, null);
+        fstNode = new Node<>(null, null, lstNode);
     }
 
     @Override
@@ -25,44 +25,48 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
         pref.setNextElement(lstNode);
         size++;
         modCount++;
+        System.out.println("Добавлен элемент: " + pref.getElement());
     }
 
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
 
-        Node<E> rsl = fstNode;
+        Node<E> rsl = fstNode.getNextElement();
 
         for (int i = 0; i < index; i++) {
-            rsl = rsl.getNextElement();
+            rsl = getNextElement(rsl);
         }
-
         return rsl.getElement();
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            final int expectedModCount = modCount;
-            int point = 0;
-
-            @Override
-            public boolean hasNext() {
-                if (expectedModCount != modCount) {
-                    throw  new ConcurrentModificationException();
-                }
-                return point < size;
-            }
-
-            @Override
-            public E next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return null;
-            }
-        };
+    private Node<E> getNextElement(Node<E> current) {
+        return current.getNextElement();
     }
+
+//    @Override
+//    public Iterator<E> iterator() {
+//        return new Iterator<E>() {
+//            final int expectedModCount = modCount;
+//            int point = 0;
+//
+//            @Override
+//            public boolean hasNext() {
+//                if (expectedModCount != modCount) {
+//                    throw  new ConcurrentModificationException();
+//                }
+//                return point < size;
+//            }
+//
+//            @Override
+//            public E next() {
+//                if (!hasNext()) {
+//                    throw new NoSuchElementException();
+//                }
+//                return null;
+//            }
+//        };
+//    }
 
     private class Node<E> {
         private E element;
@@ -93,6 +97,15 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
         public void setPrevElement(Node<E> prevElement) {
             this.prevElement = prevElement;
         }
+    }
+
+    public static void main(String[] args) {
+        ListLinked<String> str = new SimpleLinkedList<>();
+        str.add("abc");
+        str.add("xxx");
+        str.add("ddd");
+        System.out.println("Список имеет элементы с индексом 0: " + str.get(1));
+
     }
 
 }
