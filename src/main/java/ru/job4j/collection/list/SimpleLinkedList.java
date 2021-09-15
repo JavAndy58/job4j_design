@@ -13,9 +13,9 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
     private int modCount;
 
     public static void main(String[] args) {
-        ListLinked<String> str = new SimpleLinkedList<>();
-        str.add("abc");
-        System.out.println("Элемент добавленный: " + str.get(0));
+
+
+
     }
 
     public SimpleLinkedList() {
@@ -36,6 +36,7 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
+
         Node<E> rsl = fstNode.getNextElement();
         for (int i = 0; i < index; i++) {
             rsl = rsl.getNextElement();
@@ -63,10 +64,14 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
                     throw new NoSuchElementException();
                 }
                 Node<E> rsl = fstNode.getNextElement();
-                for (int i = point; point < size; point++) {
+
+                for (int i = 0; i < point; i++) {
                     rsl = rsl.getNextElement();
+                    point++;
                 }
                 return rsl.getElement();
+
+
             }
         };
     }
