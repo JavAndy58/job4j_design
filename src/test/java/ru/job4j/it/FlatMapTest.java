@@ -2,7 +2,6 @@ package ru.job4j.it;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 import java.util.Iterator;
 import java.util.List;
