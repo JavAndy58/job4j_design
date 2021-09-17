@@ -7,22 +7,24 @@ import java.util.Objects;
 
 public class SimpleLinkedList<E> implements ListLinked<E> {
 
-    private Node<E> fstNode;
-    private Node<E> lstNode;
+    private Node<E> head;
     private int size;
     private int modCount;
 
-    public SimpleLinkedList() {
-        lstNode = new Node<>(null, fstNode, null);
-        fstNode = new Node<>(null, null, lstNode);
-    }
-
     @Override
     public void add(E value) {
-        Node<E> pref = lstNode;
-        pref.setElement(value);
-        lstNode = new Node<>(null, pref, null);
-        pref.setNextElement(lstNode);
+        Node<E> node = new Node<>(value, null);
+        if (head == null) {
+            head = node;
+            size++;
+            modCount++;
+            return;
+        }
+        Node<E> tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        tail.next = node;
         size++;
         modCount++;
     }
@@ -31,16 +33,16 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
 
-        Node<E> rsl = fstNode.getNextElement();
+        Node<E> rsl = head;
         for (int i = 0; i < index; i++) {
-            rsl = rsl.getNextElement();
+            rsl = rsl.getNext();
         }
-        return rsl.getElement();
+        return rsl.getValue();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
+        return new Iterator<>() {
             final int expectedModCount = modCount;
             int point = 0;
 
@@ -57,44 +59,31 @@ public class SimpleLinkedList<E> implements ListLinked<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Node<E> rsl = fstNode.getNextElement();
+                Node<E> rsl = head;
                 for (int i = 0; i < point; i++) {
-                    rsl = rsl.getNextElement();
+                    rsl = rsl.getNext();
                 }
                 point++;
-                return rsl.getElement();
+                return rsl.getValue();
             }
         };
     }
 
     private class Node<E> {
-        private E element;
-        private Node<E> nextElement;
-        private Node<E> prevElement;
+        E value;
+        Node<E> next;
 
-        public Node(E element, Node<E> prevElement, Node<E> nextElement) {
-            this.element = element;
-            this.nextElement = nextElement;
-            this.prevElement = prevElement;
+        public Node(E value, Node<E> next) {
+            this.value = value;
+            this.next = next;
         }
 
-        public E getElement() {
-            return element;
+        public Node<E> getNext() {
+            return next;
         }
-        public void setElement(E element) {
-            this.element = element;
-        }
-        public Node<E> getNextElement() {
-            return nextElement;
-        }
-        public void setNextElement(Node<E> nextElement) {
-            this.nextElement = nextElement;
-        }
-        public Node<E> getPrevElement() {
-            return prevElement;
-        }
-        public void setPrevElement(Node<E> prevElement) {
-            this.prevElement = prevElement;
+
+        public E getValue() {
+            return value;
         }
     }
 }
