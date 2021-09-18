@@ -10,7 +10,6 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 public class SimpleLinkedListTest {
-
     @Test
     public void whenAddAndGet() {
         ListLinked<Integer> list = new SimpleLinkedList<>();
