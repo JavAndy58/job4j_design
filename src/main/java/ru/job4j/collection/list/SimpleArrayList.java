@@ -8,6 +8,7 @@ public class SimpleArrayList<T> implements List<T> {
     private int size;
     private int modCount;
 
+    @SuppressWarnings("unchecked")
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
@@ -23,7 +24,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-        T rsl = null;
+        T rsl;
         Objects.checkIndex(index, size);
         rsl = container[index];
         container[index] = newValue;
@@ -32,7 +33,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        T rsl = null;
+        T rsl;
         Objects.checkIndex(index, size);
         rsl = container[index];
         System.arraycopy(container, index + 1, container, index, size() - index - 1);
@@ -72,7 +73,6 @@ public class SimpleArrayList<T> implements List<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-
                 return container[point++];
             }
         };
