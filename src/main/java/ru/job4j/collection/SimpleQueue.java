@@ -7,7 +7,6 @@ public class SimpleQueue<T> {
     private final SimpleStack<T> out = new SimpleStack<>();
     private int sizeIn;
     private int sizeOut;
-
     public void push(T value) {
         in.push(value);
         sizeIn++;
@@ -25,10 +24,8 @@ public class SimpleQueue<T> {
                 sizeOut++;
             }
         }
-        if (sizeOut != 0) {
-            temp = out.pop();
-            sizeOut--;
-        }
+        temp = out.pop();
+        sizeOut--;
         return temp;
     }
 }
