@@ -37,11 +37,20 @@ public class ListUtilsTest {
 
     @Test
     public void whenRemoveIf() {
-        List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        Predicate<Integer> del = t -> t >= 3;
+        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5, 4, 3, 5));
+        Predicate<Integer> del = t -> t == 5;
         ListUtils.removeIf(input, del);
 
-        assertThat(input, is(Arrays.asList(1, 2)));
+        assertThat(input, is(Arrays.asList(1, 2, 4, 3)));
+    }
+
+    @Test
+    public void whenReplaceIf() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5, 4, 3, 5));
+        Predicate<Integer> replay = t -> t == 5;
+        ListUtils.replaceIf(input, replay, 10);
+
+        assertThat(input, is(Arrays.asList(10, 1, 10, 2, 10, 4, 3, 10)));
     }
 
 }
