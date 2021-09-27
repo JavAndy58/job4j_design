@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 public class ListUtils {
 
+
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
         ListIterator<T> i = list.listIterator();

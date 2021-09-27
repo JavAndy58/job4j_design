@@ -12,6 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class ListUtilsTest {
 
+
     @Test
     public void whenAddBefore() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 3));
