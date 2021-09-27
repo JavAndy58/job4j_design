@@ -53,4 +53,13 @@ public class ListUtilsTest {
         assertThat(input, is(Arrays.asList(10, 1, 10, 2, 10, 4, 3, 10)));
     }
 
+    @Test
+    public void whenRemoveAll() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5, 4, 3, 5));
+        List<Integer> elements = new ArrayList<>(Arrays.asList(1, 2));
+        ListUtils.removeAll(input, elements);
+
+        assertThat(input, is(Arrays.asList(5, 5, 5, 4, 3, 5)));
+    }
+
 }
