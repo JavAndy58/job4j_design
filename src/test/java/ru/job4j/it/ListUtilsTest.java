@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-
 import static org.junit.Assert.assertThat;
 
 public class ListUtilsTest {
@@ -37,11 +36,11 @@ public class ListUtilsTest {
 
     @Test
     public void whenRemoveIf() {
-        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5, 4, 3, 5));
+        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5));
         Predicate<Integer> del = t -> t == 5;
         ListUtils.removeIf(input, del);
 
-        assertThat(input, is(Arrays.asList(1, 2, 4, 3)));
+        assertThat(input, is(Arrays.asList(1, 2)));
     }
 
     @Test
@@ -55,11 +54,11 @@ public class ListUtilsTest {
 
     @Test
     public void whenRemoveAll() {
-        List<Integer> input = new ArrayList<>(Arrays.asList(5, 1, 5, 2, 5, 4, 3, 5));
-        List<Integer> elements = new ArrayList<>(Arrays.asList(1, 2));
+        List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        List<Integer> elements = new ArrayList<>(Arrays.asList(1, 5));
         ListUtils.removeAll(input, elements);
 
-        assertThat(input, is(Arrays.asList(5, 5, 5, 4, 3, 5)));
+        assertThat(input, is(Arrays.asList(2, 3, 4)));
     }
 
 }
