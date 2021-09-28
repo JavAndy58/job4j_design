@@ -24,7 +24,7 @@ public class SimpleSet<T> implements Set<T> {
     public boolean contains(T value) {
         boolean rsl = false;
         for (int i = 0; i < set.size(); i++) {
-            if (set.get(i).equals(value)) {
+            if (set.get(i) == value || set.get(i).equals(value)) {
                 rsl = true;
                 break;
             }
@@ -34,7 +34,21 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return set.iterator();
-    }
+        return new Iterator<T>() {
+            int point = 0;
 
+            @Override
+            public boolean hasNext() {
+                return point < set.size();
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return set.get(point++);
+            }
+        };
+    }
 }
