@@ -54,7 +54,7 @@ public class ListUtils {
         while (i.hasNext()) {
             T rsl = i.next();
             for (T rsl2 : elements) {
-                if (rsl == rsl2) {
+                if (rsl.equals(rsl2)) {
                     i.remove();
                     break;
                 }
