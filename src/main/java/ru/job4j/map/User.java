@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
+
     private String name;
     private String children;
     private String birthday;
