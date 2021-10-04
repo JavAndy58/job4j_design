@@ -15,7 +15,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         int hash = hash(hashCode);
         int indexFor = indexFor(hash);
 
-        if (count / table.length >= LOAD_FACTOR) {
+        if (count >= table.length * LOAD_FACTOR) {
             expand();
         }
         if (table[indexFor] == null) {
@@ -36,6 +36,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
+        if (table.length == 0) {
+            MapEntry<K, V>[] table = new MapEntry[8];
+        }
         MapEntry<K, V>[] tableTemp = new MapEntry[table.length * 2];
         System.arraycopy(table, 0, tableTemp, 0, count);
         table = tableTemp;
