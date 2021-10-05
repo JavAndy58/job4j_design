@@ -36,11 +36,23 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
+        K key;
+
         if (table.length == 0) {
-            MapEntry<K, V>[] table = new MapEntry[8];
+            MapEntry<K, V>[] table = new MapEntry[capacity];
         }
-        MapEntry<K, V>[] tableTemp = new MapEntry[table.length * 2];
-        System.arraycopy(table, 0, tableTemp, 0, count);
+        MapEntry<K, V>[] tableTemp = new MapEntry[capacity * 2];
+        for (MapEntry<K, V> objTable : table) {
+            if (objTable == null) {
+                break;
+            }
+            key = objTable.getKey();
+            int hashCode = Objects.hashCode(key);
+            int hash = hash(hashCode);
+            int indexFor = indexFor(hash);
+
+            tableTemp[indexFor] = objTable;
+        }
         table = tableTemp;
     }
 
