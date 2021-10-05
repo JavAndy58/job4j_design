@@ -11,17 +11,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        int rslHashCode = Objects.hashCode(key);
-        int rslHash = hash(rslHashCode);
-        int indexFor = indexFor(rslHash);
+        int index = indexTable(key);
 
-        if (table[indexFor] != null) {
+        if (table[index] != null) {
             return false;
         }
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        table[indexFor] = new MapEntry<>(key, value);
+        table[index] = new MapEntry<>(key, value);
         count++;
         modCount++;
         return true;
@@ -33,6 +31,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private int indexFor(int hash) {
         return hash & (capacity - 1);
+    }
+
+    private int indexTable(K key) {
+        int rslHashCode = Objects.hashCode(key);
+        int rslHash = hash(rslHashCode);
+        return indexFor(rslHash);
     }
 
     private void expand() {
@@ -47,41 +51,35 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 continue;
             }
             K key = objTable.getKey();
-            int rslHashCode = Objects.hashCode(key);
-            int rslHash = hash(rslHashCode);
-            int indexFor = indexFor(rslHash);
+            int index = indexTable(key);
 
-            tableTemp[indexFor] = objTable;
+            tableTemp[index] = objTable;
         }
         table = tableTemp;
     }
 
     @Override
     public V get(K key) {
-        int rslHashCode = Objects.hashCode(key);
-        int rslHash = hash(rslHashCode);
-        int indexFor = indexFor(rslHash);
+        int index = indexTable(key);
 
-        if (table[indexFor] == null) {
+        if (table[index] == null) {
             return null;
         }
-        if (table[indexFor].getKey() == key) {
-            return table[indexFor].getValue();
+        if (table[index].getKey() == key) {
+            return table[index].getValue();
         }
         return null;
     }
 
     @Override
     public boolean remove(K key) {
-        int rslHashCode = Objects.hashCode(key);
-        int rslHash = hash(rslHashCode);
-        int indexFor = indexFor(rslHash);
+        int index = indexTable(key);
 
-        if (table[indexFor] == null) {
+        if (table[index] == null) {
             return false;
         }
-        if (table[indexFor].getKey() == key) {
-            table[indexFor] = null;
+        if (table[index].getKey() == key) {
+            table[index] = null;
             count--;
             modCount--;
         }
