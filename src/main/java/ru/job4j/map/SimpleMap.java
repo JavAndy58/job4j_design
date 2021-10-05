@@ -9,6 +9,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     private int modCount = 0;
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
+
     @Override
     public boolean put(K key, V value) {
         int index = indexTable(key);
