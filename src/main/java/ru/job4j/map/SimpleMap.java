@@ -11,45 +11,45 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        int hashCode = Objects.hashCode(key);
-        int hash = hash(hashCode);
-        int indexFor = indexFor(hash);
+        int rslHashCode = Objects.hashCode(key);
+        int rslHash = hash(rslHashCode);
+        int indexFor = indexFor(rslHash);
 
-        if (count >= table.length * LOAD_FACTOR) {
+        if (table[indexFor] != null) {
+            return false;
+        }
+        if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        if (table[indexFor] == null) {
-            table[indexFor] = new MapEntry<>(key, value);
-            count++;
-            modCount++;
-            return true;
-        }
-        return false;
+        table[indexFor] = new MapEntry<>(key, value);
+        count++;
+        modCount++;
+        return true;
     }
 
     private int hash(int hashCode) {
-        return hashCode ^ (hashCode >>> table.length);
+        return hashCode ^ (hashCode >>> capacity);
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
-        K key;
-
-        if (table.length == 0) {
+        if (capacity == 0) {
             MapEntry<K, V>[] table = new MapEntry[capacity];
+            return;
         }
-        MapEntry<K, V>[] tableTemp = new MapEntry[capacity * 2];
+        capacity *= 2;
+        MapEntry<K, V>[] tableTemp = new MapEntry[capacity];
         for (MapEntry<K, V> objTable : table) {
             if (objTable == null) {
-                break;
+                continue;
             }
-            key = objTable.getKey();
-            int hashCode = Objects.hashCode(key);
-            int hash = hash(hashCode);
-            int indexFor = indexFor(hash);
+            K key = objTable.getKey();
+            int rslHashCode = Objects.hashCode(key);
+            int rslHash = hash(rslHashCode);
+            int indexFor = indexFor(rslHash);
 
             tableTemp[indexFor] = objTable;
         }
@@ -58,9 +58,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        int hashCode = Objects.hashCode(key);
-        int hash = hash(hashCode);
-        int indexFor = indexFor(hash);
+        int rslHashCode = Objects.hashCode(key);
+        int rslHash = hash(rslHashCode);
+        int indexFor = indexFor(rslHash);
 
         if (table[indexFor] == null) {
             return null;
@@ -70,9 +70,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean remove(K key) {
-        int hashCode = Objects.hashCode(key);
-        int hash = hash(hashCode);
-        int indexFor = indexFor(hash);
+        int rslHashCode = Objects.hashCode(key);
+        int rslHash = hash(rslHashCode);
+        int indexFor = indexFor(rslHash);
 
         if (table[indexFor] == null) {
             return false;
