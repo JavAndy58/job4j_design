@@ -12,6 +12,11 @@ public class SimpleTree<E> implements Tree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
+
+        if (findBy(parent).isPresent()) {
+            new Node<>(child);
+            rsl = true;
+        }
         return rsl;
     }
 
@@ -31,4 +36,20 @@ public class SimpleTree<E> implements Tree<E> {
         return rsl;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SimpleTree<?> that = (SimpleTree<?>) o;
+        return Objects.equals(root, that.root);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(root);
+    }
 }
