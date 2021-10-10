@@ -35,7 +35,7 @@ public class SimpleTreeTest {
     public void when6ElFindNotExitThenOptionEmpty() {
         Tree<Integer> tree = new SimpleTree<>(1);
         tree.add(1, 2);
-        tree.add(2,3);
+        tree.add(2, 3);
         assertThat(
                 tree.findBy(4).isPresent(),
                 is(false)
