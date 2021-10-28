@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ResultFile {
-
     public static void main(String[] args) {
         int[][] arr = new int[9][9];
         try (FileOutputStream out = new FileOutputStream("result.txt")) {
