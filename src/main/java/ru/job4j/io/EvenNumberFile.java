@@ -17,7 +17,6 @@ public class EvenNumberFile {
                 number = Integer.parseInt(line);
                 System.out.println(number + " " + (number % 2 == 0));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
