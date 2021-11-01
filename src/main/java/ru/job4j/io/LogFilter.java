@@ -9,8 +9,15 @@ import java.util.List;
 public class LogFilter {
     public static List<String> filter(String file) {
         List<String> list = new ArrayList<>();
+
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            list = in.lines().toList();
+            String line;
+            while ((line = in.readLine()) != null) {
+                if (line.contains("404")) {
+                    list.add(line);
+                    list.add(System.lineSeparator());
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
