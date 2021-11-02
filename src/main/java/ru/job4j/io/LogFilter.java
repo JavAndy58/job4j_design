@@ -14,6 +14,7 @@ public class LogFilter {
             String line;
             String[] lines;
             String search = "404";
+
             while ((line = in.readLine()) != null) {
                 lines = line.split(" ");
                 boolean found = Arrays.asList(lines).contains(search);
