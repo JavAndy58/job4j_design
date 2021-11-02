@@ -17,6 +17,26 @@ public class Config {
     }
 
     public void load() {
+        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+
+            String line;
+
+
+            while ((line = in.readLine()) != null) {
+                String[] lines;
+                lines = line.split("=");
+
+
+
+
+                values.put(lines[0], lines[1]);
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
