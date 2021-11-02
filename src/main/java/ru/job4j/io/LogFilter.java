@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LogFilter {
@@ -11,8 +12,13 @@ public class LogFilter {
         List<String> list = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             String line;
+            String[] lines;
+            String search = "404";
+
             while ((line = in.readLine()) != null) {
-                if (line.contains("404")) {
+                lines = line.split(" ");
+                boolean found = Arrays.asList(lines).contains(search);
+                if (found) {
                     list.add(line);
                     list.add(System.lineSeparator());
                 }
