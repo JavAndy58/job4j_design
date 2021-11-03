@@ -8,18 +8,22 @@ public class Analizy {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
         PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             String line;
-            String[] lines;
-            String[] targets = new String[2];
+            int rsl = 0;
 
             while ((line = in.readLine()) != null) {
-                if (line.contains("400 ") || line.contains("500 ")) {
-                    lines = line.split(" ");
-                    int rsl = 0;
+                String[] lines;
+                lines = line.split(" ");
 
-
-
-
+                if (rsl == 0 && (Objects.equals(lines[0], "400 ") || Objects.equals(lines[0], "500 "))) {
+                    out.println(lines[1] + ";");
+                    rsl = 1;
                 }
+                if (rsl == 1 && (Objects.equals(lines[0], "200 ") || Objects.equals(lines[0], "300 "))) {
+                    out.println(lines[1]);
+                    out.println(System.lineSeparator());
+                    rsl = 0;
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,11 +32,7 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
-            out.println("15:01:30;15:02:32");
-            out.println("15:10:30;23:12:32");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Analizy analizy = new Analizy();
+        analizy.unavailable("server.log", "unavailable.csv");
     }
 }
