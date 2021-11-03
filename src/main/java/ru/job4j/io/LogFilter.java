@@ -12,8 +12,6 @@ public class LogFilter {
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             String line;
             String search = " 404 ";
-
-
             while ((line = in.readLine()) != null) {
                 if (line.contains(search)) {
                     list.add(line);
