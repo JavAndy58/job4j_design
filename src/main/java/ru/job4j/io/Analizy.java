@@ -17,8 +17,7 @@ public class Analizy {
                     rsl = 1;
                 }
                 if (rsl == 1 && (Objects.equals(lines[0], "200") || Objects.equals(lines[0], "300"))) {
-                    out.print(lines[1] + ";");
-                    out.print(System.lineSeparator());
+                    out.println(lines[1] + ";");
                     rsl = 0;
                 }
             }
