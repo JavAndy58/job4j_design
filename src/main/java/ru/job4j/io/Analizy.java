@@ -7,7 +7,6 @@ public class Analizy {
     public void unavailable(String source, String target) {
         String line;
         int rsl = 0;
-
         try (BufferedReader in = new BufferedReader(new FileReader(source));
         PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             while ((line = in.readLine()) != null) {
