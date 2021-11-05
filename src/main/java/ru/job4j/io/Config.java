@@ -3,9 +3,8 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Config {
 
@@ -18,11 +17,12 @@ public class Config {
 
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                String[] lines = line.split("=");
-                values.put(lines[0], lines[1]);
-            }
+
+            in.readLine().lines()
+                    .filter(Objects::nonNull)
+                    .filter(x -> !x.contains("#"))
+                    .flatMap(lines -> Arrays.stream(lines.split("=")))
+                    .collect(Collectors.toMap(lines -> lines[0], lines -> lines[1]);
         } catch (IOException e) {
             e.printStackTrace();
         }
