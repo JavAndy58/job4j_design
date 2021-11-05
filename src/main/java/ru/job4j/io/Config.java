@@ -20,9 +20,6 @@ public class Config {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = in.readLine()) != null) {
-                if (line.contains(" ") || line.contains("#")) {
-                    continue;
-                }
                 String[] lines = line.split("=");
                 values.put(lines[0], lines[1]);
             }
