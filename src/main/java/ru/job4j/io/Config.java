@@ -18,15 +18,21 @@ public class Config {
 
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-            int rsl;
-
+            String line;
+            while ((line = in.readLine()) != null) {
+                if (line.contains(" ") || line.contains("#")) {
+                    continue;
+                }
+                String[] lines = line.split("=");
+                values.put(lines[0], lines[1]);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String value(String key) {
-        throw new UnsupportedOperationException("Don't impl this method yet!");
+        return values.get(key);
     }
 
     @Override
