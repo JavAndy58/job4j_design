@@ -15,4 +15,20 @@ public class ConfigTest {
         assertThat(config.value("name"), is("Petr Arsentev"));
         assertThat(config.value("surname"), is(Matchers.nullValue()));
     }
+
+    @Test
+    public void whenPairComment() {
+        String path = "./data/pair_comment.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("name"), is("Petr Arsentev"));
+        assertThat(config.value("surname"), is(Matchers.nullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPairIIIegalException() {
+        String path = "./data/pair_iiiegal_exception.properties";
+        Config config = new Config(path);
+        config.load();
+    }
 }

@@ -16,16 +16,25 @@ public class Config {
     }
 
     public void load() {
-        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+        String lines = toString();
+        String[] line = lines.split(System.lineSeparator());
 
-            in.readLine().lines()
-                    .filter(Objects::nonNull)
-                    .filter(x -> !x.contains("#"))
-                    .flatMap(lines -> Arrays.stream(lines.split("=")))
-                    .collect(Collectors.toMap(lines -> lines[0], lines -> lines[1]);
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (String str : line) {
+
+            if (str.length() > 2) {
+                throw new IllegalArgumentException();
+            }
         }
+
+
+        Map<String, String> tmp;
+        tmp = toString().lines()
+                .filter(Objects::nonNull)
+                .filter(x -> !x.contains("#"))
+                .map(str -> str.split("="))
+                .filter(s -> s.length > 1)
+                .collect(Collectors.toMap(str -> str[0], str -> str[1]));
+        values.putAll(tmp);
     }
 
     public String value(String key) {
@@ -42,9 +51,4 @@ public class Config {
         }
         return out.toString();
     }
-
-    public static void main(String[] args) {
-        System.out.println(new Config("app.properties"));
-    }
-
 }
