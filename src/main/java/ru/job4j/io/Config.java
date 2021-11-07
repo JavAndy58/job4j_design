@@ -16,17 +16,6 @@ public class Config {
     }
 
     public void load() {
-        String lines = toString();
-        String[] line = lines.split(System.lineSeparator());
-
-        for (String str : line) {
-
-            if (str.length() > 2) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-
         Map<String, String> tmp;
         tmp = toString().lines()
                 .filter(Objects::nonNull)
@@ -46,7 +35,7 @@ public class Config {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(out::add);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
         return out.toString();

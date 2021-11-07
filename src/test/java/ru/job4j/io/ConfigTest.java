@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
-
     @Test
     public void whenPairWithoutComment() {
         String path = "./data/pair_without_comment.properties";
@@ -27,7 +26,7 @@ public class ConfigTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenPairIIIegalException() {
-        String path = "./data/pair_iiiegal_exception.properties";
+        String path = ".data/pair_iiiegal_exception.properties";
         Config config = new Config(path);
         config.load();
     }
