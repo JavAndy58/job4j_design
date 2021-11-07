@@ -25,8 +25,8 @@ public class ConfigTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenPairIIIegalException() {
-        String path = ".data/pair_iiiegal_exception.properties";
+    public void whenPairIllegalException() {
+        String path = "./data/pair_illegal_exception.properties";
         Config config = new Config(path);
         config.load();
     }

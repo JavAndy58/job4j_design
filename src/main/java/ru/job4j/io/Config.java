@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -15,15 +16,25 @@ public class Config {
         this.path = path;
     }
 
-    public void load() {
-        Map<String, String> tmp;
-        tmp = toString().lines()
-                .filter(Objects::nonNull)
-                .filter(x -> !x.contains("#"))
-                .map(str -> str.split("="))
-                .filter(s -> s.length > 1)
-                .collect(Collectors.toMap(str -> str[0], str -> str[1]));
-        values.putAll(tmp);
+    public void load() throws IllegalArgumentException {
+        String line;
+        String[] lines;
+        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+
+            while ((line = in.readLine()) != null) {
+                if (line.contains("#") || line.length() == 0) {
+                    continue;
+                }
+                lines = line.split("=");
+                if (lines.length != 2) {
+                    throw new IllegalArgumentException();
+                }
+                values.put(lines[0], lines[1]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public String value(String key) {
@@ -35,7 +46,7 @@ public class Config {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(out::add);
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return out.toString();
