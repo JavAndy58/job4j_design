@@ -31,4 +31,11 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPairSplitIllegalException() {
+        String path = "./data/pair_split_illegal_exception.properties";
+        Config config = new Config(path);
+        config.load();
+    }
 }

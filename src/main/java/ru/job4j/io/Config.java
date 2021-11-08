@@ -32,6 +32,9 @@ public class Config {
                 throw new IllegalArgumentException();
             }
             temp = str.split("=");
+            if (temp.length != 2) {
+                throw new IllegalArgumentException();
+            }
             values.put(temp[0], temp[1]);
         }
     }
