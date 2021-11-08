@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
+
     @Test
     public void whenPairWithoutComment() {
         String path = "./data/pair_without_comment.properties";

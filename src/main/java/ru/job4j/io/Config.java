@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Config {
@@ -16,25 +18,22 @@ public class Config {
         this.path = path;
     }
 
-    public void load() throws IllegalArgumentException {
-        String line;
-        String[] lines;
-        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-
-            while ((line = in.readLine()) != null) {
-                if (line.contains("#") || line.length() == 0) {
+    public void load() {
+        String line = toString();
+        String[] lines = line.split(System.lineSeparator());
+        String[] temp;
+        for (String str : lines) {
+            if (str.contains("#") || str.length() == 0) {
                     continue;
-                }
-                lines = line.split("=");
-                if (lines.length != 2) {
-                    throw new IllegalArgumentException();
-                }
-                values.put(lines[0], lines[1]);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            Pattern pattern = Pattern.compile(".+" + "=" + ".+");
+            Matcher matcher = pattern.matcher(str);
+            if (!matcher.find()) {
+                throw new IllegalArgumentException();
+            }
+            temp = str.split("=");
+            values.put(temp[0], temp[1]);
         }
-
     }
 
     public String value(String key) {
