@@ -3,7 +3,6 @@ package ru.job4j.io.duplicates;
 import java.util.Objects;
 
 public class FileProperty {
-
     private long size;
     private String name;
 
