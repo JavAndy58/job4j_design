@@ -9,12 +9,10 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        System.out.println("Введите папку для поиска");
         if (args[0] == null) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
         Path start = Paths.get(args[0]);
-        System.out.println("Введите расширение файла для поиска");
         if (args[1] == null) {
             throw new IllegalArgumentException("Root extension is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
