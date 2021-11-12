@@ -21,6 +21,7 @@ public class ArgsName {
 
     private void parse(String[] args) throws IllegalArgumentException {
         String[] line;
+
         if (args.length == 0) {
             throw new IllegalArgumentException("Данные не введены");
         }
