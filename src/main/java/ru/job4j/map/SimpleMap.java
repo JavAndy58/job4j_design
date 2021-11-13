@@ -41,22 +41,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        if (capacity == 0) {
-            MapEntry<K, V>[] table = new MapEntry[capacity];
-            return;
-        }
         capacity *= 2;
-        MapEntry<K, V>[] tableTemp = new MapEntry[capacity];
-        for (MapEntry<K, V> objTable : table) {
-            if (objTable == null) {
-                continue;
+        MapEntry<K, V>[] oldTable = table;
+        table =  new MapEntry[capacity];
+        count = 0;
+        for (MapEntry<K, V> baket: oldTable) {
+            if (baket != null) {
+                put(baket.key, baket.value);
             }
-            K key = objTable.getKey();
-            int index = indexTable(key);
-
-            tableTemp[index] = objTable;
         }
-        table = tableTemp;
     }
 
     @Override
