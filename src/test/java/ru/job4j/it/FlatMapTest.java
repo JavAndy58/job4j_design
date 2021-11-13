@@ -72,20 +72,6 @@ public class FlatMapTest {
 
     @Test
     @Ignore
-    public void whenSeveralEmptyAndNotEmpty() {
-        Iterator<Iterator<?>> it = List.of(
-                Collections.emptyIterator(),
-                Collections.emptyIterator(),
-                Collections.emptyIterator(),
-                List.of(1).iterator()
-        ).iterator();
-        FlatMap flat = new FlatMap(it);
-        assertTrue(flat.hasNext());
-        assertThat(1, is(flat.next()));
-    }
-
-    @Test
-    @Ignore
     public void whenSeveralEmptyThenReturnFalse() {
         Iterator<Iterator<Object>> it = List.of(
                 Collections.emptyIterator(),
