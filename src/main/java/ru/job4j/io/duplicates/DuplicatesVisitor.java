@@ -7,7 +7,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
-
 import static java.nio.file.Files.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
