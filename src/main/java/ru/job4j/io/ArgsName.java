@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
-    private static final Pattern PAIR_TEMPLATE = Pattern.compile(".+" + "=" + ".+");
+    private static final Pattern PAIR_TEMPLATE = Pattern.compile("-[a-zA-Z]+=\\w");
 
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
