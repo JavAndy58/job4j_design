@@ -21,7 +21,7 @@ public class Search {
         return searcher.getPaths();
     }
 
-    public static void validation(String[] data) throws IllegalArgumentException{
+    public static void validation(String[] data) throws IllegalArgumentException {
         if (data[0] == null) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
