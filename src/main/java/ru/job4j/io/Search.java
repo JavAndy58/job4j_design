@@ -9,13 +9,9 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        if (args[0] == null) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
-        }
+        validation(args);
         Path start = Paths.get(args[0]);
-        if (args[1] == null) {
-            throw new IllegalArgumentException("Root extension is null. Usage java -jar dir.jar ROOT_FOLDER.");
-        }
+        validation(args);
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
@@ -23,5 +19,14 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    public static void validation(String[] data) throws IllegalArgumentException{
+        if (data[0] == null) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
+        if (data[1] == null) {
+            throw new IllegalArgumentException("Root extension is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
     }
 }
