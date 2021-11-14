@@ -7,11 +7,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static java.nio.file.Files.isDirectory;
+
 public class Search {
     public static void main(String[] args) throws IOException {
         validation(args);
         Path start = Paths.get(args[0]);
-        validation(args);
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
@@ -22,11 +23,16 @@ public class Search {
     }
 
     public static void validation(String[] data) throws IllegalArgumentException {
-        if (data[0] == null) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        Path directoryPath = Paths.get(data[0]);
+        if (data.length != 2) {
+            throw new IllegalArgumentException("Введенные параметры не соответсвуют шаблону поиска");
+
+        }
+        if (data[0] == null || !isDirectory(directoryPath)) {
+            throw new IllegalArgumentException("Не верный параметр для указания папки для поиска");
         }
         if (data[1] == null) {
-            throw new IllegalArgumentException("Root extension is null. Usage java -jar dir.jar ROOT_FOLDER.");
+            throw new IllegalArgumentException("Не верный параметр для указания расширения файла");
         }
     }
 }
