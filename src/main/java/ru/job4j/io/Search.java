@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Search {
+
     public static void main(String[] args) throws IOException {
         validation(args);
         Path start = Paths.get(args[0]);
