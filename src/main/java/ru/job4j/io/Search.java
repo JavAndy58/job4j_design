@@ -1,13 +1,12 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
-
-import static java.nio.file.Files.isDirectory;
 
 public class Search {
     public static void main(String[] args) throws IOException {
@@ -23,16 +22,12 @@ public class Search {
     }
 
     public static void validation(String[] data) throws IllegalArgumentException {
-        Path directoryPath = Paths.get(data[0]);
+        File directoryFile = new File(data[0]);
         if (data.length != 2) {
             throw new IllegalArgumentException("Введенные параметры не соответсвуют шаблону поиска");
-
         }
-        if (data[0] == null || !isDirectory(directoryPath)) {
+        if (!directoryFile.exists() && !directoryFile.isDirectory()) {
             throw new IllegalArgumentException("Не верный параметр для указания папки для поиска");
-        }
-        if (data[1] == null) {
-            throw new IllegalArgumentException("Не верный параметр для указания расширения файла");
         }
     }
 }
