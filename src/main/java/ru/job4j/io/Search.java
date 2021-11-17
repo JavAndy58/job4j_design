@@ -12,7 +12,7 @@ public class Search {
 
     public static void main(String[] args) throws IOException {
 //        validation(args);
-        Path start = Paths.get(args[0]);
+//        Path start = Paths.get(args[0]);
 //        search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 

@@ -1,14 +1,23 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public static void packFiles(List<File> sources, File target) {
+    public static List<Path> searchPaths = new ArrayList<>();
+    public static List<File> searchFiles = new ArrayList<>();
 
+    public static void packFiles(List<File> sources, File target) {
+        for (File source : sources) {
+            packSingleFile(source, target);
+        }
     }
 
     public static void packSingleFile(File source, File target) {
@@ -22,15 +31,19 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        packSingleFile(
 //                new File("./pom.xml"),
 //                new File("./pom.zip")
 //        );
         ArgsName.of(args);
+        ArgsName argsName = new ArgsName();
+        Path rootPath = Paths.get(argsName.get("-d"));
+        searchPaths = Search.search(rootPath, nameFile -> !nameFile.toFile().getName().endsWith(argsName.get("-e").substring(1)));
 
-
-
-
+        for (Path path : searchPaths) {
+            searchFiles.add(path.toFile());
+        }
+        packFiles(searchFiles, new File(argsName.get("-o")));
     }
 }

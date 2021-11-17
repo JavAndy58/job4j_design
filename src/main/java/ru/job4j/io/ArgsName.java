@@ -8,10 +8,10 @@ import java.util.regex.Pattern;
 
 public class ArgsName {
 
-    private final Map<String, String> values = new HashMap<>();
+    private static Map<String, String> values = new HashMap<>();
     private static final Pattern TEMPLATE_FOLDER = Pattern.compile("-[a-z]+=\\w");
-    private static final Pattern TEMPLATE_EXTENSION = Pattern.compile("-[a-z]+=[.*\\.a-z]");
-    private static final Pattern TEMPLATE_FILE = Pattern.compile("-[a-z]+=[a-zA-Z0-9\\.a-z]");
+    private static final Pattern TEMPLATE_EXTENSION = Pattern.compile("[.*\\.a-z]");
+    private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
 
 
     public static ArgsName of(String[] args) {
@@ -25,19 +25,24 @@ public class ArgsName {
     }
 
     private void parse(String[] args) throws IllegalArgumentException {
+        String[] arguments;
         if (args.length != 3) {
             throw new IllegalArgumentException("Не все данные введены");
         }
-        Matcher matcherFolder = TEMPLATE_FOLDER.matcher(args[0]);
-        File fileDirectory = new File(args[0]);
+        for (String argument : args) {
+            arguments = argument.split("=");
+            values.put(arguments[0], arguments[1]);
+        }
+        Matcher matcherFolder = TEMPLATE_FOLDER.matcher(get("-d"));
+        File fileDirectory = new File(get("-d"));
         if (!fileDirectory.isDirectory() && !matcherFolder.find()) {
             throw new IllegalArgumentException("Архивируемая директория указана не правильно или не существует");
         }
-        Matcher matcherExtension = TEMPLATE_EXTENSION.matcher(args[1]);
+        Matcher matcherExtension = TEMPLATE_EXTENSION.matcher(get("-e").substring(1));
         if (!matcherExtension.find()) {
             throw new IllegalArgumentException("Неархивируемые файлы указаны не правильно");
         }
-        Matcher matcherFile = TEMPLATE_FILE.matcher(args[2]);
+        Matcher matcherFile = TEMPLATE_FILE.matcher(get("-o"));
         if (!matcherFile.find()) {
             throw new IllegalArgumentException("Имя файла архива указано не правильно");
         }
