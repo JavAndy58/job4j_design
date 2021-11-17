@@ -11,7 +11,6 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
     public static List<Path> searchPaths = new ArrayList<>();
     public static List<File> searchFiles = new ArrayList<>();
-
     public static void packFiles(List<File> sources, File target) {
         for (File source : sources) {
             packSingleFile(source, target);
