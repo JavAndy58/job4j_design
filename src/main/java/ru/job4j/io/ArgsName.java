@@ -13,7 +13,6 @@ public class ArgsName {
     private static final Pattern TEMPLATE_EXTENSION = Pattern.compile("[.*\\.a-z]");
     private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
 
-
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);
@@ -31,28 +30,20 @@ public class ArgsName {
         }
         for (String argument : args) {
             arguments = argument.split("=");
-            values.put(arguments[0], arguments[1]);
+            values.put(arguments[0].substring(1), arguments[1]);
         }
-        Matcher matcherFolder = TEMPLATE_FOLDER.matcher(get("-d"));
-        File fileDirectory = new File(get("-d"));
+        Matcher matcherFolder = TEMPLATE_FOLDER.matcher(get("d"));
+        File fileDirectory = new File(get("d"));
         if (!fileDirectory.isDirectory() && !matcherFolder.find()) {
             throw new IllegalArgumentException("Архивируемая директория указана не правильно или не существует");
         }
-        Matcher matcherExtension = TEMPLATE_EXTENSION.matcher(get("-e").substring(1));
+        Matcher matcherExtension = TEMPLATE_EXTENSION.matcher(get("e").substring(1));
         if (!matcherExtension.find()) {
             throw new IllegalArgumentException("Неархивируемые файлы указаны не правильно");
         }
-        Matcher matcherFile = TEMPLATE_FILE.matcher(get("-o"));
+        Matcher matcherFile = TEMPLATE_FILE.matcher(get("o"));
         if (!matcherFile.find()) {
             throw new IllegalArgumentException("Имя файла архива указано не правильно");
         }
     }
-
-//    public static void main(String[] args) {
-//        ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512", "-encoding=UTF-8"});
-//        System.out.println(jvm.get("Xmx"));
-//
-//        ArgsName zip = ArgsName.of(new String[] {"-out=project.zip", "-encoding=UTF-8"});
-//        System.out.println(zip.get("out"));
-//    }
 }

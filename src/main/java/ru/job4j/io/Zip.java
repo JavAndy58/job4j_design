@@ -5,12 +5,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
-
     public static List<Path> searchPaths = new ArrayList<>();
     public static List<File> searchFiles = new ArrayList<>();
 
@@ -26,24 +24,19 @@ public class Zip {
             try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
                 zip.write(out.readAllBytes());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws IOException {
-//        packSingleFile(
-//                new File("./pom.xml"),
-//                new File("./pom.zip")
-//        );
         ArgsName.of(args);
         ArgsName argsName = new ArgsName();
-        Path rootPath = Paths.get(argsName.get("-d"));
-        searchPaths = Search.search(rootPath, nameFile -> !nameFile.toFile().getName().endsWith(argsName.get("-e").substring(1)));
-
+        Path rootPath = Paths.get(argsName.get("d"));
+        searchPaths = Search.search(rootPath, nameFile -> !nameFile.toFile().getName().endsWith(argsName.get("e").substring(1)));
         for (Path path : searchPaths) {
             searchFiles.add(path.toFile());
         }
-        packFiles(searchFiles, new File(argsName.get("-o")));
+        packFiles(searchFiles, new File(argsName.get("o")));
     }
 }
