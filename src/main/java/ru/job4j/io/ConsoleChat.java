@@ -23,6 +23,7 @@ public class ConsoleChat {
              BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             String inputText;
             boolean switchPhrases = true;
+
             while (!(inputText = bufferedReader.readLine()).equals(OUT)) {
                 bufferedWriter.write(inputText);
                 if (inputText.equals(STOP)) {
