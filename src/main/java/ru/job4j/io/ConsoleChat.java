@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,18 +19,26 @@ public class ConsoleChat {
 
     public void run() {
         List<String> listPhrases = readPhrases();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
-            String inputText = bufferedReader.readLine();
-            while (!inputText.equals(OUT)) {
-//                System.out.println(inputText);
-
-
-                if (!inputText.equals(STOP)) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+            String inputText;
+            boolean switchPhrases = true;
+            while (!(inputText = bufferedReader.readLine()).equals(OUT)) {
+                bufferedWriter.write(inputText);
+                if (inputText.equals(STOP)) {
+                    switchPhrases = false;
+                }
+                if (!inputText.equals(STOP) && switchPhrases) {
+                    String line;
                     int randomIndex = (int) (Math.random() * listPhrases.size());
-                    System.out.println(listPhrases.get(randomIndex));
+                    line = listPhrases.get(randomIndex);
+                    System.out.println(line);
+                    bufferedWriter.write(line);
+                }
+                if (inputText.equals(CONTINUE)) {
+                    switchPhrases = true;
                 }
 
-                inputText = bufferedReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
