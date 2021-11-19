@@ -11,19 +11,17 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
     public static List<Path> searchPaths = new ArrayList<>();
     public static List<File> searchFiles = new ArrayList<>();
-    public static void packFiles(List<File> sources, File target) {
-        for (File source : sources) {
-            packSingleFile(source, target);
-        }
-    }
 
-    public static void packSingleFile(File source, File target) {
+    public static void packFiles(List<File> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
+            for (File file : sources) {
+                zip.putNextEntry(new ZipEntry(file.getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+                    zip.write(out.readAllBytes());
+                }
             }
-        } catch (Exception e) {
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
