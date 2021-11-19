@@ -9,6 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
+
     public static List<Path> searchPaths = new ArrayList<>();
     public static List<File> searchFiles = new ArrayList<>();
 

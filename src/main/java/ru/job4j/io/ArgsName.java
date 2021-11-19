@@ -12,6 +12,7 @@ public class ArgsName {
     private static final Pattern TEMPLATE_FOLDER = Pattern.compile("-[a-z]+=\\w");
     private static final Pattern TEMPLATE_EXTENSION = Pattern.compile("[.*\\.a-z]");
     private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
+
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);
