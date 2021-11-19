@@ -3,7 +3,6 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ConsoleChat {
     private final String path;
@@ -19,14 +18,13 @@ public class ConsoleChat {
 
     public void run() {
         List<String> listPhrases = readPhrases();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
-            String inputText;
-            boolean switchPhrases = true;
-            inputText = bufferedReader.readLine();
+        List<String> listDialogs = new ArrayList<>();
+        boolean switchPhrases = true;
 
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
+            String inputText = bufferedReader.readLine();
             while (!inputText.equals(OUT)) {
-                bufferedWriter.write(inputText);
+                listDialogs.add(inputText);
                 if (inputText.equals(STOP)) {
                     switchPhrases = false;
                 }
@@ -35,17 +33,17 @@ public class ConsoleChat {
                     int randomIndex = (int) (Math.random() * listPhrases.size());
                     line = listPhrases.get(randomIndex);
                     System.out.println(line);
-                    bufferedWriter.write(line);
+                    listDialogs.add(line);
                 }
                 if (inputText.equals(CONTINUE)) {
                     switchPhrases = true;
                 }
-
+                inputText = bufferedReader.readLine();
             }
+        saveLog(listDialogs);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private List<String> readPhrases() {
@@ -59,7 +57,13 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+            for (String str : log) {
+                bufferedWriter.write(str + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
