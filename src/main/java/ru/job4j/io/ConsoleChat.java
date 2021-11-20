@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,22 +24,25 @@ public class ConsoleChat {
 
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
             String inputText = bufferedReader.readLine();
-            while (!inputText.equals(OUT)) {
+            while (!(OUT).equals(inputText)) {
                 listDialogs.add(inputText);
-                if (inputText.equals(STOP)) {
+                if ((STOP).equals(inputText)) {
                     switchPhrases = false;
                 }
-                if (!inputText.equals(STOP) && switchPhrases) {
+                if (!(STOP).equals(inputText) && switchPhrases) {
                     String line;
                     int randomIndex = (int) (Math.random() * listPhrases.size());
                     line = listPhrases.get(randomIndex);
                     System.out.println(line);
                     listDialogs.add(line);
                 }
-                if (inputText.equals(CONTINUE)) {
+                if ((CONTINUE).equals(inputText)) {
                     switchPhrases = true;
                 }
                 inputText = bufferedReader.readLine();
+                if ((OUT).equals(inputText)) {
+                    listDialogs.add(inputText);
+                }
             }
         saveLog(listDialogs);
         } catch (IOException e) {
@@ -48,7 +52,7 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> listPhrases = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(botAnswers))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(botAnswers, Charset.forName("WINDOWS-1251")))) {
             br.lines().forEach(listPhrases::add);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +61,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251")))) {
             for (String str : log) {
                 bufferedWriter.write(str + System.lineSeparator());
             }
