@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class CSVReader {
 
+
     public static void handle(ArgsName argsName) throws Exception {
         final Pattern TEMPLATE_SCANNER = Pattern.compile("\".*\"");
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {

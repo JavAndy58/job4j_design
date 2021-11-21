@@ -37,6 +37,7 @@ public class ArgsName {
         if (arguments.length != 4) {
             throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
         }
+
 //        Matcher matcherFile = TEMPLATE_FILE.matcher(get("path"));
 //        File file = new File(get("path"));
 //        if (!file.exists() && !file.isDirectory() && !matcherFile.find()) {
