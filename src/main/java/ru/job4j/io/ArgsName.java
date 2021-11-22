@@ -16,8 +16,8 @@ public class ArgsName {
 
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
-        names.validation(args);
         names.parse(args);
+        names.validation();
         return names;
     }
 
@@ -26,6 +26,9 @@ public class ArgsName {
     }
 
     private void parse(String[] args) throws IllegalArgumentException {
+        if (args.length != 4) {
+            throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
+        }
         String[] arguments;
         for (String argument : args) {
             arguments = argument.split("=");
@@ -33,28 +36,24 @@ public class ArgsName {
         }
     }
 
-    private void validation(String[] arguments) throws IllegalArgumentException {
-        if (arguments.length != 4) {
-            throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
+    private void validation() throws IllegalArgumentException {
+        Matcher matcherFile = TEMPLATE_FILE.matcher(get("path"));
+        File file = new File(get("path"));
+        if (!file.exists() && !file.isDirectory() && !matcherFile.find()) {
+            throw new IllegalArgumentException("Файл указан не правильно или не существует");
         }
-
-//        Matcher matcherFile = TEMPLATE_FILE.matcher(get("path"));
-//        File file = new File(get("path"));
-//        if (!file.exists() && !file.isDirectory() && !matcherFile.find()) {
-//            throw new IllegalArgumentException("Файл указан не правильно или не существует");
-//        }
-//        Matcher matcherDelimited = TEMPLATE_DELIMITER.matcher(get("delimiter").substring(1, 2));
-//        if (!matcherDelimited.find()) {
-//            throw new IllegalArgumentException("Делитель указан не правильно");
-//        }
-//        Matcher matcherOut = TEMPLATE_OUT.matcher(get("out"));
-//        File fileOut = new File(get("out"));
-//        if (!matcherOut.find() && (!fileOut.exists() || get("out").equals("stdout"))) {
-//            throw new IllegalArgumentException("Файл для вывода или stdout указаны не правильно");
-//        }
-//        Matcher matcherFilter = TEMPLATE_FILTER.matcher(get("filter"));
-//        if (!matcherFilter.find()) {
-//            throw new IllegalArgumentException("Фильтр указан не правильно");
-//        }
+        Matcher matcherDelimited = TEMPLATE_DELIMITER.matcher(get("delimiter").substring(0, 1));
+        if (!matcherDelimited.find()) {
+            throw new IllegalArgumentException("Делитель указан не правильно");
+        }
+        Matcher matcherOut = TEMPLATE_OUT.matcher(get("out"));
+        File fileOut = new File(get("out"));
+        if (!matcherOut.find() && (!fileOut.exists() || get("out").equals("stdout"))) {
+            throw new IllegalArgumentException("Файл для вывода или stdout указаны не правильно");
+        }
+        Matcher matcherFilter = TEMPLATE_FILTER.matcher(get("filter"));
+        if (!matcherFilter.find()) {
+            throw new IllegalArgumentException("Фильтр указан не правильно");
+        }
     }
 }
