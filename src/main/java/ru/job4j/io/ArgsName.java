@@ -17,7 +17,7 @@ public class ArgsName {
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);
-        names.validation();
+        names.validation(args);
         return names;
     }
 
@@ -26,9 +26,6 @@ public class ArgsName {
     }
 
     private void parse(String[] args) throws IllegalArgumentException {
-        if (args.length != 4) {
-            throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
-        }
         String[] arguments;
         for (String argument : args) {
             arguments = argument.split("=");
@@ -36,7 +33,11 @@ public class ArgsName {
         }
     }
 
-    private void validation() throws IllegalArgumentException {
+    private void validation(String[] arguments) throws IllegalArgumentException {
+        if (arguments.length != 4) {
+            throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
+        }
+
         Matcher matcherFile = TEMPLATE_FILE.matcher(get("path"));
         File file = new File(get("path"));
         if (!file.exists() && !file.isDirectory() && !matcherFile.find()) {
