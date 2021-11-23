@@ -7,22 +7,24 @@ import java.util.regex.Pattern;
 
 public class CSVReader {
 
-
     public static void handle(ArgsName argsName) throws Exception {
+        String[] argumentsFilter = argsName.get("filter").split(",");
+
         final Pattern TEMPLATE_SCANNER = Pattern.compile("\".*\"");
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
-            scanner.useDelimiter(argsName.get("delimiter"));
+//            scanner.useDelimiter(argsName.get("delimiter"));
 //            scanner.findWithinHorizon(TEMPLATE_SCANNER.matcher(argsName.get("delimiter")));
             while (scanner.hasNext()) {
+                scanner.useDelimiter("\"");
                 System.out.println(scanner.next());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) throws Exception {
         handle(ArgsName.of(args));
-
     }
 }

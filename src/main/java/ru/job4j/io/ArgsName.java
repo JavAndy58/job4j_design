@@ -32,7 +32,6 @@ public class ArgsName {
             values.put(arguments[0].substring(1), arguments[1]);
         }
     }
-
     private void validation(String[] arguments) throws IllegalArgumentException {
         if (arguments.length != 4) {
             throw new IllegalArgumentException("Введены не все необходимые данные для работы программы");
