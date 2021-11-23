@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class CSVReader {
 
+
     public static void handle(ArgsName argsName) throws Exception {
         String[] argumentsFilter = argsName.get("filter").split(",");
 
