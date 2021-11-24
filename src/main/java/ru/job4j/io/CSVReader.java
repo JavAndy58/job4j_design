@@ -6,6 +6,7 @@ import java.util.*;
 public class CSVReader {
 
     public static void handle(ArgsName argsName) throws Exception {
+
         String argumentsLine = argsName.get("filter");
         String[] argumentsFilter = argumentsLine.split(",");
         int[] switcher = new int[argumentsFilter.length];
