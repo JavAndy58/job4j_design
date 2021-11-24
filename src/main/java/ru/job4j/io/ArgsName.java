@@ -42,7 +42,7 @@ public class ArgsName {
         if (!file.exists() && !file.isDirectory() && !matcherFile.find()) {
             throw new IllegalArgumentException("Файл указан не правильно или не существует");
         }
-        Matcher matcherDelimited = TEMPLATE_DELIMITER.matcher(get("delimiter").substring(0, 1));
+        Matcher matcherDelimited = TEMPLATE_DELIMITER.matcher(get("delimiter"));
         if (!matcherDelimited.find()) {
             throw new IllegalArgumentException("Делитель указан не правильно");
         }

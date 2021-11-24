@@ -2,29 +2,41 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CSVReader {
 
-
     public static void handle(ArgsName argsName) throws Exception {
-        String[] argumentsFilter = argsName.get("filter").split(",");
 
-        final Pattern TEMPLATE_SCANNER = Pattern.compile("\".*\"");
+        String argumentsLine = argsName.get("filter");
+        String[] argumentsFilter = argumentsLine.split(",");
+        int[] switcher = new int[argumentsFilter.length];
+
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
-//            scanner.useDelimiter(argsName.get("delimiter"));
-//            scanner.findWithinHorizon(TEMPLATE_SCANNER.matcher(argsName.get("delimiter")));
-            while (scanner.hasNext()) {
-                scanner.useDelimiter("\"");
-                System.out.println(scanner.next());
+
+            while (scanner.hasNextLine()) {
+
+                String str;
+                String lineTemp = scanner.nextLine();
+                str = lineTemp.substring(1, lineTemp.length() - 1);
+                String[] linesTemp = str.split(";");
+
+                for (int i = 0; i < linesTemp.length; i++) {
+                    if (Arrays.asList(argumentsFilter).contains(linesTemp[i])) {
+                        switcher[i] = i;
+                    }
+
+                }
+                for (int i = 0; i < linesTemp.length; i++) {
+                    if (Arrays.binarySearch(switcher, i) >= 0) {
+                        System.out.print(linesTemp[i] + " ");
+                    }
+                }
+                System.out.println();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     public static void main(String[] args) throws Exception {
         handle(ArgsName.of(args));
     }
