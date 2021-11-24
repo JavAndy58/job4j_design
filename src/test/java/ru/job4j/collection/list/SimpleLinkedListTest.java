@@ -3,7 +3,6 @@ package ru.job4j.collection.list;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
