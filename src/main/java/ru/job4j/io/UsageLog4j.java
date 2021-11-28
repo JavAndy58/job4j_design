@@ -16,7 +16,7 @@ public class UsageLog4j {
         long id = 115151353543435434L;
         float width = 25;
         boolean man = true;
-        LOG.debug("User age : {}, weight : {}, height : {}, size : {}, letter : {}" +
-                        ", id : {}, width : {}, man : {}", age, weight, height, size, letter, id, width, man);
+        LOG.debug("User age : {}, weight : {}, height : {}, size : {}, letter : {}, id : {}, width : {}, man : {}",
+                age, weight, height, size, letter, id, width, man);
     }
 }
