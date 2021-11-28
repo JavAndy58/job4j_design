@@ -23,7 +23,6 @@ public class EchoServer {
                         }
                         if (!str.contains("Hello") && (!str.contains("Exit")) && str.length() != 0) {
                             out.write("What".getBytes());
-
                         }
                     out.flush();
                 }
