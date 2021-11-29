@@ -5,17 +5,16 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
     public static void main(String[] args) {
-        final Driver driver = new Driver("Petr", 40, true,
-                new String[] {"Passport", "License"}, new CarMazda("CX-5"));
+        final Driver driver = new Driver("Petr", 40, true, new CarMazda("CX-5"), new String[] {"Passport", "License"});
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(driver));
         final String driverJson =
                 "{"
                 + "\"name\":\"Petr\","
-                + "\"age\":35,"
+                + "\"age\":40,"
                 + "\"sex\":true,"
                 + "\"documents\":"
-                + "[\"Passport\",\"License\"]"
+                + "[\"Passport\",\"License\"],"
                 + "\"carMazda\":"
                 + "{"
                 + "\"modelAuto\":\"CX-5\""

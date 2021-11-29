@@ -7,20 +7,20 @@ public class Driver {
     private final String name;
     private final int age;
     private final boolean sex;
-    private final String[] documents;
     private final CarMazda carMazda;
+    private final String[] documents;
 
     public Driver(String name, int age, boolean sex, String[] documents, CarMazda carMazda) {
         this.name = name;
         this.age = age;
         this.sex = sex;
-        this.documents = documents;
         this.carMazda = carMazda;
+        this.documents = documents;
     }
 
     @Override
     public String toString() {
-        return "Driver{name='" + name + '\'' + ", age=" + age + ", sex=" + sex
-                + ", documents=" + Arrays.toString(documents) + '}';
+        return "Driver{name='" + name + '\'' + ", age=" + age + ", sex=" + sex + ", carMazda="
+                + carMazda + ", documents=" + Arrays.toString(documents) + '}';
     }
 }
