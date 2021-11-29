@@ -10,7 +10,7 @@ public class Driver {
     private final CarMazda carMazda;
     private final String[] documents;
 
-    public Driver(String name, int age, boolean sex, String[] documents, CarMazda carMazda) {
+    public Driver(String name, int age, boolean sex, CarMazda carMazda, String[] documents) {
         this.name = name;
         this.age = age;
         this.sex = sex;
@@ -20,7 +20,12 @@ public class Driver {
 
     @Override
     public String toString() {
-        return "Driver{name='" + name + '\'' + ", age=" + age + ", sex=" + sex + ", carMazda="
-                + carMazda + ", documents=" + Arrays.toString(documents) + '}';
+        return "Driver{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                ", carMazda=" + carMazda +
+                ", documents=" + Arrays.toString(documents) +
+                '}';
     }
 }
