@@ -14,13 +14,14 @@ public class Main {
                     + "\"name\":\"Petr\","
                     + "\"age\":40,"
                     + "\"sex\":true,"
-                    + "{"
                     + "\"carMazda\":"
+                    + "{"
                     + "\"modelAuto\":\"CX-5\""
                     + "},"
                     + "\"documents\":"
                     + "[\"Passport\",\"License\"]"
                     + "}";
+
         final Driver driverMod = gson.fromJson(driverJson, Driver.class);
         System.out.println(driverMod);
     }
