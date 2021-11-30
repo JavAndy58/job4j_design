@@ -12,34 +12,25 @@ public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
 
         validation(argsName);
-        String argumentsLine = argsName.get("filter");
-        String[] argumentsFilter = argumentsLine.split(",");
-        int[] switcher = new int[argumentsFilter.length];
+        String argumentsHead = argsName.get("filter");
+        String[] arrayHead = argumentsHead.split(",");
+        int[] switcher = new int[arrayHead.length];
         StringBuilder outBuffer = new StringBuilder();
 
+        for (int i = 0; i < arrayHead.length; i++) {
+            switcher[i] = i;
+        }
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
-            if (scanner.hasNextLine()) {
-                String[] linesTempHead = formatString(argsName, scanner.nextLine());
-                for (int i = 0; i < linesTempHead.length; i++) {
-                    if (Arrays.asList(argumentsFilter).contains(linesTempHead[i])) {
-                        switcher[i] = i;
-                        if (i < (argumentsFilter.length - 1)) {
-                            outBuffer.append(linesTempHead[i]).append(";");
-                        } else {
-                            outBuffer.append(linesTempHead[i]).append(System.lineSeparator());
-                        }
-                    }
-                }
-            }
             while (scanner.hasNextLine()) {
-                String[] linesTemp = formatString(argsName, scanner.nextLine());
+                String lineScanner = scanner.nextLine();
+                String lineScannerSubstring = lineScanner.substring(0, lineScanner.length() - 1);
+                String[] linesScanner = lineScannerSubstring.split(argsName.get("delimiter"));
+                StringJoiner lineBuffer = new StringJoiner(argsName.get("delimiter"));
                 for (Integer index : switcher) {
-                    if (index != switcher[switcher.length - 1]) {
-                        outBuffer.append(linesTemp[index]).append(";");
-                    } else {
-                        outBuffer.append(linesTemp[index]).append(System.lineSeparator());
-                    }
+                    lineBuffer.add(linesScanner[index]);
                 }
+                outBuffer.append(lineBuffer);
+                outBuffer.append(System.lineSeparator());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,12 +42,6 @@ public class CSVReader {
                     writer.write(outBuffer.toString());
                  }
             }
-    }
-
-    private static String[] formatString(ArgsName argsName, String stringLine) {
-        String stringTemp;
-        stringTemp = stringLine.substring(1, stringLine.length() - 1);
-        return stringTemp.split(argsName.get("delimiter"));
     }
 
     private static void validation(ArgsName argsName) throws IllegalArgumentException {
