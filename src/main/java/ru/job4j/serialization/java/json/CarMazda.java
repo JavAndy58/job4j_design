@@ -9,8 +9,8 @@ public class CarMazda {
 
     @Override
     public String toString() {
-        return "CarMazda{" +
-                "modelAuto='" + modelAuto + '\'' +
-                '}';
+        return "CarMazda{"
+                + "modelAuto='" + modelAuto + '\''
+                + '}';
     }
 }

@@ -19,12 +19,12 @@ public class Driver {
 
     @Override
     public String toString() {
-        return "Driver{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", sex=" + sex +
-                ", carMazda=" + carMazda +
-                ", documents=" + Arrays.toString(documents) +
-                '}';
+        return "Driver{"
+                + "name='" + name + '\''
+                + ", age=" + age
+                + ", sex=" + sex
+                + ", carMazda=" + carMazda
+                + ", documents=" + Arrays.toString(documents)
+                + '}';
     }
 }
