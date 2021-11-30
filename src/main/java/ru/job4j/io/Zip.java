@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -27,11 +29,19 @@ public class Zip {
         }
     }
 
+    private static void validation(String[] args) throws IllegalArgumentException {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Не все данные введены");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        ArgsName.of(args);
+        validation(args);
         ArgsName argsName = new ArgsName();
+        ArgsName.of(args);
         Path rootPath = Paths.get(argsName.get("d"));
-        searchPaths = Search.search(rootPath, nameFile -> !nameFile.toFile().getName().endsWith(argsName.get("e").substring(1)));
+        searchPaths = Search.search(rootPath, nameFile -> !nameFile.toFile().getName()
+                .endsWith(argsName.get("e").substring(1)));
         for (Path path : searchPaths) {
             searchFiles.add(path.toFile());
         }
