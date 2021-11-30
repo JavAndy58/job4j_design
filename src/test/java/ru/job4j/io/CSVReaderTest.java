@@ -15,6 +15,7 @@ public class CSVReaderTest {
 
     @Test
     public void whenFilterTwoColumns() throws Exception {
+
         String data = String.join(
                 System.lineSeparator(),
                 "name;age;last_name;education",

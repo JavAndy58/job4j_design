@@ -10,7 +10,6 @@ import java.util.*;
 public class CSVReader {
 
     public static void handle(ArgsName argsName) throws Exception {
-
         validation(argsName);
         String argumentsHead = argsName.get("filter");
         String[] arrayHead = argumentsHead.split(",");
