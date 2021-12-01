@@ -7,6 +7,10 @@ public class CarMazda {
         this.modelAuto = modelAuto;
     }
 
+    public String getModelAuto() {
+        return modelAuto;
+    }
+
     @Override
     public String toString() {
         return "CarMazda{"

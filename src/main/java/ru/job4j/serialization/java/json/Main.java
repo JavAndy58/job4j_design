@@ -1,28 +1,34 @@
 package ru.job4j.serialization.java.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import ru.job4j.collection.list.List;
+import ru.job4j.collection.list.SimpleArrayList;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+
+        JSONObject jsonCarMazda = new JSONObject("{\"modelAuto\":\"CX-5\"}");
+
+
+
+        List<String> list = new ArrayList<>();
+        list.add("Passport");
+        list.add("License");
+        JSONArray jsonDocumentses = new JSONArray(list);
+
         final Driver driver = new Driver("Petr", 40, true,
                 new CarMazda("CX-5"), new String[] {"Passport", "License"});
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(driver));
-        final String driverJson =
-                "{"
-                    + "\"name\":\"Petr\","
-                    + "\"age\":40,"
-                    + "\"sex\":true,"
-                    + "\"carMazda\":"
-                    + "{"
-                    + "\"modelAuto\":\"CX-5\""
-                    + "},"
-                    + "\"documents\":"
-                    + "[\"Passport\",\"License\"]"
-                    + "}";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", driver.getName());
+        jsonObject.put("age", driver.getAge());
+        jsonObject.put("sex", driver.isSex());
+        jsonObject.put("carMazda", jsonCarMazda);
+        jsonObject.put("documentses", jsonDocumentses);
 
-        final Driver driverMod = gson.fromJson(driverJson, Driver.class);
-        System.out.println(driverMod);
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(driver));
     }
 }

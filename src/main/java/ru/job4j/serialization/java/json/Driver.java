@@ -17,6 +17,26 @@ public class Driver {
         this.documents = documents;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public CarMazda getCarMazda() {
+        return carMazda;
+    }
+
+    public String[] getDocuments() {
+        return documents;
+    }
+
     @Override
     public String toString() {
         return "Driver{"
