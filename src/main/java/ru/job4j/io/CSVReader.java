@@ -9,17 +9,32 @@ import java.util.*;
 
 public class CSVReader {
 
+    private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
+    private static final Pattern TEMPLATE_DELIMITER = Pattern.compile("\\W");
+    private static final Pattern TEMPLATE_OUT = Pattern.compile("\\w");
+    private static final Pattern TEMPLATE_FILTER = Pattern.compile("([a-z],)+");
+
     public static void handle(ArgsName argsName) throws Exception {
         validation(argsName);
         String argumentsHead = argsName.get("filter");
         String[] arrayHead = argumentsHead.split(",");
         int[] switcher = new int[arrayHead.length];
         StringBuilder outBuffer = new StringBuilder();
-
         for (int i = 0; i < arrayHead.length; i++) {
             switcher[i] = i;
         }
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
+            if (scanner.hasNextLine()) {
+                String lineHeadScanner = scanner.nextLine();
+                String lineHeadScannerSubstring = lineHeadScanner.substring(0, lineHeadScanner.length() - 1);
+                String[] linesHeadScanner = lineHeadScannerSubstring.split(",");
+                StringJoiner lineHeadBuffer = new StringJoiner(argsName.get("delimiter"));
+                for (Integer index : switcher) {
+                    lineHeadBuffer.add(linesHeadScanner[index]);
+                }
+                outBuffer.append(lineHeadBuffer);
+                outBuffer.append(System.lineSeparator());
+            }
             while (scanner.hasNextLine()) {
                 String lineScanner = scanner.nextLine();
                 String lineScannerSubstring = lineScanner.substring(0, lineScanner.length() - 1);
@@ -44,11 +59,6 @@ public class CSVReader {
     }
 
     private static void validation(ArgsName argsName) throws IllegalArgumentException {
-
-        final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
-        final Pattern TEMPLATE_DELIMITER = Pattern.compile("\\W");
-        final Pattern TEMPLATE_OUT = Pattern.compile("\\w");
-        final Pattern TEMPLATE_FILTER = Pattern.compile("([a-z],)+");
 
         Matcher matcherFile = TEMPLATE_FILE.matcher(argsName.get("path"));
         File file = new File(argsName.get("path"));
