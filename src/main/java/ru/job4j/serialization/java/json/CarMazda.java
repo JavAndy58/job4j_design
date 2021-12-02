@@ -1,6 +1,7 @@
 package ru.job4j.serialization.java.json;
 
 public class CarMazda {
+
     private final String modelAuto;
 
     public CarMazda(String modelAuto) {

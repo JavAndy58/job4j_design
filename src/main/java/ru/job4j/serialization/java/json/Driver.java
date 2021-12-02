@@ -3,6 +3,7 @@ package ru.job4j.serialization.java.json;
 import java.util.Arrays;
 
 public class Driver {
+
     private final String name;
     private final int age;
     private final boolean sex;

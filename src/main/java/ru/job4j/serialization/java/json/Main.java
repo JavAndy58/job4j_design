@@ -2,8 +2,6 @@ package ru.job4j.serialization.java.json;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ru.job4j.collection.list.List;
-import ru.job4j.collection.list.SimpleArrayList;
 
 import java.util.ArrayList;
 
@@ -11,10 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         JSONObject jsonCarMazda = new JSONObject("{\"modelAuto\":\"CX-5\"}");
-
-
-
-        List<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         list.add("Passport");
         list.add("License");
         JSONArray jsonDocumentses = new JSONArray(list);
