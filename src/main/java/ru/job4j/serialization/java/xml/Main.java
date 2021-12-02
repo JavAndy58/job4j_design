@@ -20,8 +20,8 @@ public class Main {
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
             marshaller.marshal(driver, writer);
-            String result = writer.getBuffer().toString();
-            System.out.println(result);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
         } catch (Exception e) {
             e.printStackTrace();
         }
