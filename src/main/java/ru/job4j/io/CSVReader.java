@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 
 public class CSVReader {
 
-    private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9\\.a-z]");
+    private static final Pattern TEMPLATE_FILE = Pattern.compile("[a-zA-Z0-9.a-z]");
     private static final Pattern TEMPLATE_DELIMITER = Pattern.compile("\\W");
     private static final Pattern TEMPLATE_OUT = Pattern.compile("\\w");
     private static final Pattern TEMPLATE_FILTER = Pattern.compile("([a-z],)+");
@@ -24,12 +24,12 @@ public class CSVReader {
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
             if (scanner.hasNextLine()) {
                 String lineHeadScanner = scanner.nextLine();
-                String lineHeadScannerSubstring = lineHeadScanner.substring(1, lineHeadScanner.length() - 1);
-                String[] linesHeadScanner = lineHeadScannerSubstring.split(argsName.get("delimiter"));
+                String[] linesHeadScanner = lineHeadScanner.split(argsName.get("delimiter"));
                 StringJoiner lineHeadBuffer = new StringJoiner(argsName.get("delimiter"));
+                List<String> headList = Arrays.asList(arrayHead);
                 int indexSwitcher = 0;
                 for (int i = 0; i < linesHeadScanner.length; i++) {
-                    if (Arrays.asList(arrayHead).contains(linesHeadScanner[i])) {
+                    if (headList.contains(linesHeadScanner[i])) {
                         lineHeadBuffer.add(linesHeadScanner[i]);
                         switcher[indexSwitcher] = i;
                         indexSwitcher++;
@@ -40,8 +40,7 @@ public class CSVReader {
             }
             while (scanner.hasNextLine()) {
                 String lineScanner = scanner.nextLine();
-                String lineScannerSubstring = lineScanner.substring(1, lineScanner.length() - 1);
-                String[] linesScanner = lineScannerSubstring.split(argsName.get("delimiter"));
+                String[] linesScanner = lineScanner.split(argsName.get("delimiter"));
                 StringJoiner lineBuffer = new StringJoiner(argsName.get("delimiter"));
                 for (Integer index : switcher) {
                     lineBuffer.add(linesScanner[index]);
