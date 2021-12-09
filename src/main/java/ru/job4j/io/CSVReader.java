@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,43 +21,44 @@ public class CSVReader {
         String[] arrayHead = argumentsHead.split(",");
         int[] switcher = new int[arrayHead.length];
         StringBuilder outBuffer = new StringBuilder();
-        for (int i = 0; i < arrayHead.length; i++) {
-            switcher[i] = i;
-        }
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")))) {
             if (scanner.hasNextLine()) {
                 String lineHeadScanner = scanner.nextLine();
-                String lineHeadScannerSubstring = lineHeadScanner.substring(0, lineHeadScanner.length() - 1);
-                String[] linesHeadScanner = lineHeadScannerSubstring.split(",");
+                String[] linesHeadScanner = lineHeadScanner.split(argsName.get("delimiter"));
                 StringJoiner lineHeadBuffer = new StringJoiner(argsName.get("delimiter"));
-                for (Integer index : switcher) {
-                    lineHeadBuffer.add(linesHeadScanner[index]);
+                List<String> headList = Arrays.asList(arrayHead);
+                int indexSwitcher = 0;
+                for (int i = 0; i < linesHeadScanner.length; i++) {
+                        if (headList.contains(linesHeadScanner[i])) {
+                            lineHeadBuffer.add(linesHeadScanner[i]);
+                            switcher[indexSwitcher] = i;
+                            indexSwitcher++;
+                        }
+                    }
+                    outBuffer.append(lineHeadBuffer);
+                    outBuffer.append(System.lineSeparator());
                 }
-                outBuffer.append(lineHeadBuffer);
-                outBuffer.append(System.lineSeparator());
-            }
-            while (scanner.hasNextLine()) {
-                String lineScanner = scanner.nextLine();
-                String lineScannerSubstring = lineScanner.substring(0, lineScanner.length() - 1);
-                String[] linesScanner = lineScannerSubstring.split(argsName.get("delimiter"));
-                StringJoiner lineBuffer = new StringJoiner(argsName.get("delimiter"));
-                for (Integer index : switcher) {
-                    lineBuffer.add(linesScanner[index]);
+                while (scanner.hasNextLine()) {
+                    String lineScanner = scanner.nextLine();
+                    String[] linesScanner = lineScanner.split(argsName.get("delimiter"));
+                    StringJoiner lineBuffer = new StringJoiner(argsName.get("delimiter"));
+                    for (Integer index : switcher) {
+                        lineBuffer.add(linesScanner[index]);
+                    }
+                    outBuffer.append(lineBuffer);
+                    outBuffer.append(System.lineSeparator());
                 }
-                outBuffer.append(lineBuffer);
-                outBuffer.append(System.lineSeparator());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (argsName.get("out").equals("stdout")) {
-            System.out.print(outBuffer);
+            if (argsName.get("out").equals("stdout")) {
+                System.out.print(outBuffer);
             } else {
-                 try (PrintWriter writer = new PrintWriter(argsName.get("out"))) {
-                    writer.write(outBuffer.toString());
-                 }
+                try (FileWriter writer = new FileWriter(argsName.get("out"), false)) {
+                    writer.write(String.valueOf(outBuffer));
+                }
             }
-    }
+        }
 
     private static void validation(ArgsName argsName) throws IllegalArgumentException {
 
