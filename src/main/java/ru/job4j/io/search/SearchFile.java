@@ -39,7 +39,6 @@ public class SearchFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static void validation(ArgsName argsName) throws IllegalArgumentException {
