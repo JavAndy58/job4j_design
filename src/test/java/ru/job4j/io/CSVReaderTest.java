@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 import java.io.File;
 import java.nio.file.Files;
 
@@ -15,7 +14,6 @@ public class CSVReaderTest {
 
     @Test
     public void whenFilterTwoColumns() throws Exception {
-
         String data = String.join(
                 System.lineSeparator(),
                 "name;age;last_name;education",
