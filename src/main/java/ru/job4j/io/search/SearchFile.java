@@ -26,7 +26,7 @@ public class SearchFile {
         validation(argsName);
         Path startFolder = Paths.get(argsName.get("d"));
         if ((Objects.equals(argsName.get("t"), "name"))) {
-            searchResult = Search.search(startFolder, p -> p.toFile().getName().endsWith(argsName.get("n")));
+            searchResult = Search.search(startFolder, p -> p.toFile().getName().equals(argsName.get("n")));
         }
         if ((Objects.equals(argsName.get("t"), "mask"))) {
             searchResult = Search.search(startFolder, p -> p.toFile().getName().endsWith(argsName.get("n").substring(1)));
