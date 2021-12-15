@@ -15,6 +15,7 @@ create table devices_people(
     people_id int references people(id)
 );
 
+
 INSERT INTO devices(name, price)
 VALUES ('Smartphone', 12550), ('TV', 25800), ('Ps4', 20190), ('Projector', 33000);
 INSERT INTO people(name)
