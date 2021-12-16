@@ -70,4 +70,3 @@ insert into husbands(name_husband) values ('Petr');
 insert into wifes_husbands(wife_id, husband_id) values (1, 1);
 insert into wifes_husbands(wife_id, husband_id) values (2, 3);
 insert into wifes_husbands(wife_id, husband_id) values (3, 2);
-
