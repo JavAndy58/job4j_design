@@ -12,8 +12,9 @@ SELECT name
 FROM product
 WHERE expired_date > '01.03.2021';
 
-SELECT max(price)
+SELECT name, price
 FROM product
+WHERE price = (SELECT max(price) FROM product)
 
 SELECT t.name, count(p.name)
 FROM product as p
@@ -38,31 +39,3 @@ SELECT p.name, t.name
 FROM product as p
 JOIN type as t
 ON p.type_id = t.id
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
