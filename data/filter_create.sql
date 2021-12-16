@@ -11,6 +11,7 @@ CREATE TABLE product(
 	type_id int references type(id) 
 );
 
+
 INSERT INTO type(name) values ('СЫР'), ('МОЛОКО'), ('ЧАЙ');
 
 INSERT INTO product(name, expired_date, price, type_id) values 
