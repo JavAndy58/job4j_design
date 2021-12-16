@@ -1,6 +1,8 @@
-
-SELECT name
-FROM type;
+SELECT p.name, t.name
+FROM type as t
+JOIN product as p
+ON p.type_id = t.id
+WHERE t.name = 'СЫР'
 
 SELECT name
 FROM product
@@ -10,10 +12,8 @@ SELECT name
 FROM product
 WHERE expired_date > '01.03.2021';
 
-SELECT name, price
+SELECT max(price)
 FROM product
-ORDER BY price desc
-LIMIT 1;
 
 SELECT t.name, count(p.name)
 FROM product as p
