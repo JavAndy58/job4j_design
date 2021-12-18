@@ -8,9 +8,6 @@ insert into teens(name, gender) values
 ('Olga', 'female'), ('Anna', 'female'),
 ('Oleg', 'male'), ('Petr', 'male');
 
-SELECT g1.gender, g2.gender
-
-SELECT *
-FROM teens g1
-CROSS JOIN teens g2
-WHERE g2 != g1
+SELECT n1.name as femaly_name, n1.gender, n2.name as male_name, n2.gender
+FROM teens n1 cross join teens n2
+WHERE n1.gender != n2.gender AND n1.gender = 'female';
