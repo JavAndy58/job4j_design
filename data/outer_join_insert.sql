@@ -1,4 +1,3 @@
-
 SELECT *
 FROM departments
 LEFT JOIN emploers
@@ -20,23 +19,21 @@ CROSS JOIN emploers;
 
 -- № 3
 SELECT *
-FROM departments
-LEFT JOIN emploers
+FROM emploers
+LEFT JOIN departments
 ON departments.id = emploers.department_id
 WHERE departments.name is null;
 
 -- № 4
-SELECT *
+SELECT emploers.name, departments.name
 FROM departments
 LEFT JOIN emploers
 ON departments.id = emploers.department_id;
 
-SELECT *
+SELECT emploers.name, departments.name
 FROM emploers
 RIGHT JOIN departments
 ON departments.id = emploers.department_id;
-
-
 
 
 
