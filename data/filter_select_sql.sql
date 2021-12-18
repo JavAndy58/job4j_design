@@ -10,7 +10,7 @@ WHERE name LIKE '%мороженное%';
 
 SELECT name
 FROM product
-WHERE expired_date > '01.03.2021';
+WHERE current_date > expired_date;
 
 SELECT name, price
 FROM product
