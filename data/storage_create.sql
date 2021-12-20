@@ -21,6 +21,7 @@ CREATE TABLE cars(
 	transmission_id int references transmissions(id)
 );
 
+
 INSERT INTO bodys(name) VALUES ('sedan'), ('hatchback'), ('wagon');
 INSERT INTO engines(name) VALUES ('internal conbustion'), ('composite');
 INSERT INTO transmissions(name) VALUES ('automatic'), ('mechanical'), ('variable');
