@@ -22,36 +22,35 @@ public class TableEditor implements AutoCloseable {
         connection = DriverManager.getConnection(url, login, password);
     }
 
-    private Statement getStatement() throws Exception {
+    private void getStatement(String string) throws Exception {
         try (Statement statement = connection.createStatement()) {
-            return statement;
+            statement.execute(string);
         }
     }
 
     public void createTable(String tableName) throws Exception {
         String sql = String.format("CREATE TABLE if not exists %s();", tableName);
-        getStatement().execute(sql);
+        getStatement(sql);
     }
     public void dropTable(String tableName) throws Exception {
         String sql = String.format("DROP TABLE %s();", tableName);
-        getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
         String sql = String.format("ALTER TABLE %s ADD %s %s NULL;", tableName, columnName, type);
-        getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
         String sql = String.format("ALTER TABLE %s DROP COLUMN %s;", tableName, columnName);
-        getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
         String sql = String.format("ALTER TABLE %s RENAME COLUMN %s TO %s;", tableName, columnName, newColumnName);
-        getStatement().execute(sql);
+        getStatement(sql);
     }
-
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
