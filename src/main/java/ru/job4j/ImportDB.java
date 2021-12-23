@@ -26,11 +26,8 @@ public class ImportDB {
             String[] lines;
             while ((line = rd.readLine()) != null) {
                 lines = line.split(";");
-                if (lines.length > 2) {
+                if (lines.length != 2 && lines[0].isEmpty() && lines[1].isEmpty()) {
                     throw new IOException("Неправильный шаблон входных данных");
-                }
-                if (lines[0] == null) {
-                    throw new IOException("Вводимые данные пустые");
                 }
                 users.add(new User(lines[0], lines[1]));
             }
