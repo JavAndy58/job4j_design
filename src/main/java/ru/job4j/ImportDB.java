@@ -26,6 +26,12 @@ public class ImportDB {
             String[] lines;
             while ((line = rd.readLine()) != null) {
                 lines = line.split(";");
+                if (lines.length > 2) {
+                    throw new IOException("Неправильный шаблон входных данных");
+                }
+                if (lines[0] == null) {
+                    throw new IOException("Вводимые данные пустые");
+                }
                 users.add(new User(lines[0], lines[1]));
             }
         }
@@ -40,7 +46,7 @@ public class ImportDB {
                 cfg.getProperty("jdbc.password")
         )) {
             for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("insert into users ...")) {
+                try (PreparedStatement ps = cnt.prepareStatement("insert into users (name, email) values (?, ?)")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
